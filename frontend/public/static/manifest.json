@@ -1,30 +1,30 @@
 {
     "short_name": "Notes!",
     "name": "Notes!",
-    "start_url": "./index.html",
+    "start_url": "/",
     "icons": [
         {
-            "src": "./static/images/note-32x32.png",
+            "src": "images/note-32x32.png",
             "type": "image/png",
             "sizes": "32x32"
         },
         {
-            "src": "./static/images/note-64x64.png",
+            "src": "images/note-64x64.png",
             "type": "image/png",
             "sizes": "64x64"
         },
         {
-            "src": "./static/images/note-128x128.png",
+            "src": "images/note-128x128.png",
             "type": "image/png",
             "sizes": "128x128"
         },
         {
-            "src": "./static/images/note-256x256.png",
+            "src": "images/note-256x256.png",
             "type": "image/png",
             "sizes": "256x256"
         },
         {
-            "src": "./static/images/note-512x512.png",
+            "src": "images/note-512x512.png",
             "type": "image/png",
             "sizes": "512x512"
         }
