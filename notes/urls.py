@@ -6,6 +6,7 @@ The 'urlpatterns' list routes URLs to viewsets
 
 # Django
 from django.urls import path
+from django.views.generic import TemplateView
 
 # Django Rest Framework
 from rest_framework import routers
@@ -23,6 +24,14 @@ ROUTER.register(r'notes', NoteViewSet)
 
 urlpatterns = [
     path('', vue, name='vue'),
+    path(
+        'service-worker.js',
+        TemplateView.as_view(
+            template_name="service-worker.js",
+            content_type='application/javascript'
+        ),
+        name='service-worker'
+    )
 ]
 
 urlpatterns += ROUTER.urls

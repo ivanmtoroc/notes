@@ -112,12 +112,12 @@ REST_FRAMEWORK = {
     'UNAUTHENTICATED_USER': None
 }
 
-FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
+FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend/')
 
 STATICFILES_DIRS = [
-    os.path.join(FRONTEND_DIR, 'dist/static'),
+    os.path.join(FRONTEND_DIR, 'dist/static/')
 ]
 
 TEMPLATES[0]['DIRS'] += [
-    os.path.join(FRONTEND_DIR, 'dist'),
+    os.path.join(FRONTEND_DIR, 'dist/'),
 ]
