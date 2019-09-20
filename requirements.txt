@@ -1,0 +1,7 @@
+django==2.2.2
+django-cors-headers==3.0.2
+djangorestframework==3.9.4
+psycopg2==2.8.2
+psycopg2-binary==2.8.2
+pytz==2019.2
+sqlparse==0.3.0
