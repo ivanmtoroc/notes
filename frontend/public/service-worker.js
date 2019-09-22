@@ -36,14 +36,26 @@ self.addEventListener('install', event => {
 })
 
 self.addEventListener('fetch', function (event) {
-  event.respondWith(
-    caches.open(NOTES_CACHE).then(function (cache) {
-      return cache.match(event.request).then(function (response) {
-        return response || fetch(event.request).then(function (response) {
-          cache.put(event.request, response.clone())
-          return response
+  var requestURL = new URL(event.request.url)
+
+  if (requestURL.pathname === '/notes/') {
+    event.respondWith(
+      caches.open(NOTES_CACHE).then(function (cache) {
+        return cache.match(event.request).then(function (response) {
+          return response || fetch(event.request).then(function (response) {
+            cache.put(event.request, response.clone())
+            return response
+          })
         })
       })
-    })
-  )
+    )
+  } else {
+    event.respondWith(
+      caches.open(APP_SHELL_CACHE).then(function (cache) {
+        return cache.match(event.request).then(function (response) {
+          return response || fetch(event.request)
+        })
+      })
+    )
+  }
 })
