@@ -60,7 +60,8 @@ export default new Vuex.Store({
   },
   actions: {
     getNotes: async ({ commit }) => {
-      const response = await http.get('notes/')
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const response = await http.get('notes/?format=json')
       if (!response.error) {
         commit('SET_NOTES', response.data)
       }
@@ -71,7 +72,7 @@ export default new Vuex.Store({
     createNote: async ({ state, commit }, event) => {
       if (event) event.preventDefault()
       commit('SET_ERRORS', {})
-      const response = await http.post('notes/', state.note)
+      const response = await http.post('notes/?format=json', state.note)
       if (!navigator.onLine) {
         commit('ADD_NOTE', { ...state.note, error: true })
         hideModal('#note-form')
@@ -88,7 +89,7 @@ export default new Vuex.Store({
     updateNote: async ({ state, commit }, event) => {
       if (event) event.preventDefault()
       commit('SET_ERRORS', {})
-      const response = await http.patch(`notes/${state.note.id}/`, state.note)
+      const response = await http.patch(`notes/${state.note.id}/?format=json`, state.note)
       if (!response.error) {
         commit('UPDATE_NOTE', response.data)
         hideModal('#note-form')
@@ -97,7 +98,7 @@ export default new Vuex.Store({
       }
     },
     deleteNote: async ({ state, commit }) => {
-      const response = await http.delete(`notes/${state.note.id}/`)
+      const response = await http.delete(`notes/${state.note.id}/?format=json`)
       if (!response.error) {
         commit('DELETE_NOTE')
         hideModal('#note-status')

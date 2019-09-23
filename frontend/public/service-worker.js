@@ -32,11 +32,13 @@ const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
   maxRetentionTime: 24 * 60
 })
 
+const HOST = 'http://192.168.0.27:8000/'
+
 
 workbox.precaching.precacheAndRoute(APP_SHELL_CACHE_FILES)
 
 workbox.routing.registerRoute(
-  'http://192.168.0.27:8000/notes/',
+  `${HOST}notes/?format=json`,
   new workbox.strategies.NetworkFirst({
     cacheName: 'notes',
     plugins: [
@@ -48,7 +50,7 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
-  'http://192.168.0.27:8000/notes/',
+  `${HOST}notes/?format=json`,
   new workbox.strategies.NetworkOnly({
     plugins: [ BACKGROUND_SYNC ]
   }),
