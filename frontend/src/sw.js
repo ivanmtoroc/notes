@@ -26,4 +26,9 @@ if (process.env.NODE_ENV === 'production') {
       console.error('Error during service worker registration:', error)
     }
   })
+
+  navigator.serviceWorker.ready
+    .then(registration => registration.sync.register('note-sync'))
+    .then(() => console.log('Registered background sync.'))
+    .catch(() => console.error('Error registering background sync.'))
 }

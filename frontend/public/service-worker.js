@@ -59,3 +59,11 @@ self.addEventListener('fetch', function (event) {
     )
   }
 })
+
+self.addEventListener('sync', function (event) {
+  if (event.tag === 'note-sync') {
+    event.waitUntil(function () {
+
+    })
+  }
+})
