@@ -17,6 +17,9 @@
       >
         <i class="fa fa-edit"></i>
       </button>
+      <button v-if="note.error" class="action close text-warning">
+        <i class="fa fa-warning"></i>
+      </button>
       <h2>{{ note.title }}</h2>
       <p>{{ note.note }}</p>
     </div>
@@ -45,5 +48,8 @@ export default {
 <style scoped>
 .action {
   margin: 0px 5px;
+}
+.text-warning {
+  color: #CE9024 !important;
 }
 </style>

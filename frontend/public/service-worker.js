@@ -1,5 +1,6 @@
-const NOTES_CACHE = 'notes'
-const APP_SHELL_CACHE = 'app-shell'
+/* eslint-disable */
+self.importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js')
+
 const APP_SHELL_CACHE_FILES = [
   '/static/bower_components/bootstrap/dist/js/bootstrap.min.js',
   '/static/bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -27,43 +28,29 @@ const APP_SHELL_CACHE_FILES = [
   '/'
 ]
 
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(APP_SHELL_CACHE).then(function (cache) {
-      return cache.addAll(APP_SHELL_CACHE_FILES)
-    })
-  )
+const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
+  maxRetentionTime: 24 * 60
 })
 
-self.addEventListener('fetch', function (event) {
-  var requestURL = new URL(event.request.url)
 
-  if (requestURL.pathname === '/notes/') {
-    event.respondWith(
-      caches.open(NOTES_CACHE).then(function (cache) {
-        return cache.match(event.request).then(function (response) {
-          return response || fetch(event.request).then(function (response) {
-            cache.put(event.request, response.clone())
-            return response
-          })
-        })
+workbox.precaching.precacheAndRoute(APP_SHELL_CACHE_FILES)
+
+workbox.routing.registerRoute(
+  'http://192.168.0.27:8000/notes/',
+  new workbox.strategies.NetworkFirst({
+    cacheName: 'notes',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
       })
-    )
-  } else {
-    event.respondWith(
-      caches.open(APP_SHELL_CACHE).then(function (cache) {
-        return cache.match(event.request).then(function (response) {
-          return response || fetch(event.request)
-        })
-      })
-    )
-  }
-})
+    ]
+  })
+)
 
-self.addEventListener('sync', function (event) {
-  if (event.tag === 'note-sync') {
-    event.waitUntil(function () {
-
-    })
-  }
-})
+workbox.routing.registerRoute(
+  'http://192.168.0.27:8000/notes/',
+  new workbox.strategies.NetworkOnly({
+    plugins: [ BACKGROUND_SYNC ]
+  }),
+  'POST'
+)

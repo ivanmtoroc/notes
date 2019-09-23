@@ -4,12 +4,24 @@ import http from '@/utilities/http'
 
 Vue.use(Vuex)
 
+const hideModal = (modalName) => {
+  // eslint-disable-next-line
+  $(modalName).modal('hide')
+}
+
+const isFieldValid = (field) => !(!field || field === '')
+
 export default new Vuex.Store({
   state: {
     notes: [],
     note: {},
     errors: {},
     isNew: false
+  },
+  getters: {
+    isValidForm: state => {
+      return isFieldValid(state.note.title) && isFieldValid(state.note.note)
+    }
   },
   mutations: {
     SET_NOTES: (state, notes) => {
@@ -60,10 +72,12 @@ export default new Vuex.Store({
       if (event) event.preventDefault()
       commit('SET_ERRORS', {})
       const response = await http.post('notes/', state.note)
-      if (!response.error) {
+      if (!navigator.onLine) {
+        commit('ADD_NOTE', { ...state.note, error: true })
+        hideModal('#note-form')
+      } else if (!response.error) {
         commit('ADD_NOTE', response.data)
-        // eslint-disable-next-line
-        $('#note-form').modal('hide')
+        hideModal('#note-form')
       } else {
         commit('SET_ERRORS', response.data)
       }
@@ -77,8 +91,7 @@ export default new Vuex.Store({
       const response = await http.patch(`notes/${state.note.id}/`, state.note)
       if (!response.error) {
         commit('UPDATE_NOTE', response.data)
-        // eslint-disable-next-line
-        $('#note-form').modal('hide')
+        hideModal('#note-form')
       } else {
         commit('SET_ERRORS', response.data)
       }
@@ -87,8 +100,7 @@ export default new Vuex.Store({
       const response = await http.delete(`notes/${state.note.id}/`)
       if (!response.error) {
         commit('DELETE_NOTE')
-        // eslint-disable-next-line
-        $('#note-status').modal('hide')
+        hideModal('#note-status')
       }
     }
   }

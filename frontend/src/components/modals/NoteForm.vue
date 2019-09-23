@@ -19,15 +19,27 @@
       </div>
       <div class="pull-right">
         <button class="btn btn-info" data-dismiss="modal">Cancel</button>
-        <button v-if="isNew" @click="createNote($event)" class="btn btn-success" type="submit">Create</button>
-        <button v-else @click="updateNote($event)" class="btn btn-primary" type="submit">Update</button>
+        <button
+          v-if="isNew"
+          @click="createNote($event)"
+          class="btn btn-success"
+          :class="[ isValidForm ? '' : 'disabled' ]"
+          type="submit"
+        >Create</button>
+        <button
+          v-else
+          @click="updateNote($event)"
+          class="btn btn-primary"
+          :class="[ isValidForm ? '' : 'disabled' ]"
+          type="submit"
+        >Update</button>
       </div>
     </form>
   </modal-component>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import ModalComponent from '@/components/template/Modal'
 import InputComponent from '@/components/template/Input'
 
@@ -41,6 +53,9 @@ export default {
     ...mapState([
       'errors',
       'isNew'
+    ]),
+    ...mapGetters([
+      'isValidForm'
     ]),
     title: {
       get () { return this.$store.state.note.title },

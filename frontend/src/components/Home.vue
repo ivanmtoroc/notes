@@ -46,6 +46,7 @@ export default {
   },
   mounted () {
     this.getNotes()
+    window.addEventListener('online', this.getNotes)
   }
 }
 </script>
