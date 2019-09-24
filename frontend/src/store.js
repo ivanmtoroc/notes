@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import http from '@/utilities/http'
+import { openDB } from 'idb'
 
 Vue.use(Vuex)
 
@@ -60,7 +61,27 @@ export default new Vuex.Store({
   },
   actions: {
     getNotes: async ({ commit }) => {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const db = await openDB('workbox-background-sync', 3, {
+        upgrade (db) {
+          const store = db.createObjectStore('requests', {
+            keyPath: 'id',
+            autoIncrement: true
+          })
+          store.createIndex('queueName', 'queueName', { unique: false })
+        }
+      })
+
+      var counter
+
+      do {
+        counter = 0
+        var cursor = await db.transaction('requests').store.openCursor()
+        while (cursor) {
+          counter += 1
+          cursor = await cursor.continue()
+        }
+      } while (counter !== 0)
+
       const response = await http.get('notes/?format=json')
       if (!response.error) {
         commit('SET_NOTES', response.data)
