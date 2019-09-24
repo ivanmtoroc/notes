@@ -25,7 +25,7 @@ import Note from '@/components/template/Note'
 import NoteForm from '@/components/modals/NoteForm'
 import NoteStatus from '@/components/modals/NoteStatus'
 
-const SYNC_FLAG = 'SYNC_FLAG'
+const CHANNEL = new BroadcastChannel('sync-messages')
 
 export default {
   name: 'home',
@@ -44,23 +44,11 @@ export default {
   methods: {
     ...mapActions([
       'getNotes'
-    ]),
-    sync () {
-      var value
-      do {
-        value = localStorage.getItem(SYNC_FLAG)
-      } while (value !== 'sync')
-
-      console.log('Vue: Sync complete!')
-      localStorage.setItem(SYNC_FLAG, 'not-sync')
-
-      this.getNotes()
-    }
+    ])
   },
   mounted () {
     this.getNotes()
-    localStorage.setItem(SYNC_FLAG, 'sync')
-    window.addEventListener('online', this.sync)
+    CHANNEL.addEventListener('message', this.getNotes)
   }
 }
 </script>

@@ -32,10 +32,10 @@ const HOST = 'http://10.0.2.15:8000/'
 
 const SYNC_FLAG = 'SYNC_FLAG'
 
+const CHANNEL = new BroadcastChannel('sync-messages')
+
 const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
   onSync: async function () {
-    console.log('Workbox: Sincronizando...')
-
     let entry
     while (entry = await this.shiftRequest()) {
       try {
@@ -46,8 +46,7 @@ const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
       }
     }
 
-    console.log('Workbox: Sincronizado!')
-    localStorage.setItem(SYNC_FLAG, 'sync')
+    CHANNEL.postMessage({ status: 'Sync complete!' })
   },
   maxRetentionTime: 24 * 60
 })
