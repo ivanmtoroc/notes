@@ -28,11 +28,29 @@ const APP_SHELL_CACHE_FILES = [
   '/'
 ]
 
+const HOST = 'http://10.0.2.15:8000/'
+
+const SYNC_FLAG = 'SYNC_FLAG'
+
 const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
+  onSync: async function () {
+    console.log('Workbox: Sincronizando...')
+
+    let entry
+    while (entry = await this.shiftRequest()) {
+      try {
+        await fetch(entry.request.clone())
+      } catch (error) {
+        await this.unshiftRequest(entry)
+        throw new WorkboxError('queue-replay-failed', {name: this._name});
+      }
+    }
+
+    console.log('Workbox: Sincronizado!')
+    localStorage.setItem(SYNC_FLAG, 'sync')
+  },
   maxRetentionTime: 24 * 60
 })
-
-const HOST = 'http://192.168.0.27:8000/'
 
 
 workbox.precaching.precacheAndRoute(APP_SHELL_CACHE_FILES)
@@ -46,11 +64,12 @@ workbox.routing.registerRoute(
         statuses: [0, 200],
       })
     ]
-  })
+  }),
+  'GET'
 )
 
 workbox.routing.registerRoute(
-  `${HOST}notes/?format=json`,
+  `${HOST}notes/`,
   new workbox.strategies.NetworkOnly({
     plugins: [ BACKGROUND_SYNC ]
   }),

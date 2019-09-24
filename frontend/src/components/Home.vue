@@ -25,6 +25,8 @@ import Note from '@/components/template/Note'
 import NoteForm from '@/components/modals/NoteForm'
 import NoteStatus from '@/components/modals/NoteStatus'
 
+const SYNC_FLAG = 'SYNC_FLAG'
+
 export default {
   name: 'home',
   components: {
@@ -42,11 +44,23 @@ export default {
   methods: {
     ...mapActions([
       'getNotes'
-    ])
+    ]),
+    sync () {
+      var value
+      do {
+        value = localStorage.getItem(SYNC_FLAG)
+      } while (value !== 'sync')
+
+      console.log('Vue: Sync complete!')
+      localStorage.setItem(SYNC_FLAG, 'not-sync')
+
+      this.getNotes()
+    }
   },
   mounted () {
     this.getNotes()
-    window.addEventListener('online', this.getNotes)
+    localStorage.setItem(SYNC_FLAG, 'sync')
+    window.addEventListener('online', this.sync)
   }
 }
 </script>
