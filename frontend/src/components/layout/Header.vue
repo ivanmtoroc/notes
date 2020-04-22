@@ -9,18 +9,12 @@
             </strong>
           </a>
         </div>
-        <div class="collapse navbar-collapse pull-left">
-        </div>
+        <div class="collapse navbar-collapse pull-left"></div>
         <div class="navbar-custom-menu">
           <a>
             <ul class="nav navbar-nav nav-item">
               <li>
-                <button
-                  @click="newEmptyNote()"
-                  class="btn bg-purple"
-                  data-toggle="modal"
-                  data-target="#note-form"
-                >
+                <button @click="newEmptyNote()" class="btn bg-purple" data-toggle="modal" data-target="#note-form">
                   <i class="fa fa-plus-circle"></i>
                   Add Note
                 </button>
@@ -39,9 +33,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'header-component',
   methods: {
-    ...mapActions([
-      'newEmptyNote'
-    ])
+    ...mapActions(['newEmptyNote'])
   }
 }
 </script>

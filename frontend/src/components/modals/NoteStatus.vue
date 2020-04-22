@@ -4,7 +4,8 @@
       <div class="col-sm-12">
         <p>
           Are you sure to delete the note
-          <strong>{{ note.title }}</strong>?
+          <strong>{{ note.title }}</strong
+          >?
         </p>
       </div>
     </div>
@@ -27,14 +28,10 @@ export default {
     ModalComponent
   },
   computed: {
-    ...mapState([
-      'note'
-    ])
+    ...mapState(['note'])
   },
   methods: {
-    ...mapActions([
-      'deleteNote'
-    ])
+    ...mapActions(['deleteNote'])
   }
 }
 </script>

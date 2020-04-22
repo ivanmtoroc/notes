@@ -1,32 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#009688" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/AdminLTE.min.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/ripples.min.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/MaterialAdminLTE.min.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/skins/all-md-skins.min.css" />
+    <link rel="shortcut icon" href="<%= BASE_URL %>static/images/favicon.png" />
+    <link rel="apple-touch-icon" href="<%= BASE_URL %>static/images/note-128x128.png" />
+    <link rel="manifest" href="<%= BASE_URL %>static/manifest.json" />
+    <title>Notes!</title>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#009688">
-  <link rel="stylesheet" href="<%= BASE_URL %>static/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="<%= BASE_URL %>static/bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/bootstrap-material-design.min.css">
-  <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/ripples.min.css">
-  <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/MaterialAdminLTE.min.css">
-  <link rel="stylesheet" href="<%= BASE_URL %>static/dist/css/skins/all-md-skins.min.css">
-  <link rel="shortcut icon" href="<%= BASE_URL %>static/images/favicon.png">
-  <link rel="apple-touch-icon" href="<%= BASE_URL %>static/images/note-128x128.png">
-  <link rel="manifest" href="<%= BASE_URL %>static/manifest.json">
-  <title>Notes!</title>
-</head>
-
-<body class="hold-transition skin-green sidebar-mini">
-  <div id="app"></div>
-  <script src="<%= BASE_URL %>static/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="<%= BASE_URL %>static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<%= BASE_URL %>static/dist/js/material.min.js"></script>
-  <script src="<%= BASE_URL %>static/dist/js/ripples.min.js"></script>
-  <script src="<%= BASE_URL %>static/dist/js/adminlte.min.js"></script>
-  <script>$.material.init()</script>
-</body>
-
+  <body class="hold-transition skin-green sidebar-mini">
+    <div id="app"></div>
+    <script src="<%= BASE_URL %>static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%= BASE_URL %>static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="<%= BASE_URL %>static/dist/js/material.min.js"></script>
+    <script src="<%= BASE_URL %>static/dist/js/ripples.min.js"></script>
+    <script src="<%= BASE_URL %>static/dist/js/adminlte.min.js"></script>
+    <script>
+      $.material.init()
+    </script>
+  </body>
 </html>

@@ -28,21 +28,21 @@ const APP_SHELL_CACHE_FILES = [
   '/'
 ]
 
-const HOST = 'http://127.0.0.1:8000/'
+const HOST = 'http://localhost:8000/api/'
 
 const SYNC_FLAG = 'SYNC_FLAG'
 
 const CHANNEL = new BroadcastChannel('sync-messages')
 
 const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
-  onSync: async function () {
+  onSync: async function() {
     let entry
-    while (entry = await this.shiftRequest()) {
+    while ((entry = await this.shiftRequest())) {
       try {
         await fetch(entry.request.clone())
       } catch (error) {
         await this.unshiftRequest(entry)
-        throw new WorkboxError('queue-replay-failed', {name: this._name});
+        throw new WorkboxError('queue-replay-failed', { name: this._name })
       }
     }
 
@@ -51,16 +51,15 @@ const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
   maxRetentionTime: 24 * 60
 })
 
-
 workbox.precaching.precacheAndRoute(APP_SHELL_CACHE_FILES)
 
 workbox.routing.registerRoute(
-  `${HOST}notes/?format=json`,
+  `${HOST}notes/`,
   new workbox.strategies.NetworkFirst({
     cacheName: 'notes',
     plugins: [
       new workbox.cacheableResponse.Plugin({
-        statuses: [0, 200],
+        statuses: [0, 200]
       })
     ]
   }),
@@ -70,7 +69,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   `${HOST}notes/`,
   new workbox.strategies.NetworkOnly({
-    plugins: [ BACKGROUND_SYNC ]
+    plugins: [BACKGROUND_SYNC]
   }),
   'POST'
 )

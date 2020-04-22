@@ -37,16 +37,12 @@ export default {
     NoteStatus
   },
   computed: {
-    ...mapState([
-      'notes'
-    ])
+    ...mapState(['notes'])
   },
   methods: {
-    ...mapActions([
-      'getNotes'
-    ])
+    ...mapActions(['getNotes'])
   },
-  mounted () {
+  mounted() {
     this.getNotes()
     CHANNEL.addEventListener('message', this.getNotes)
   }
@@ -59,6 +55,6 @@ export default {
   margin-bottom: 70px;
 }
 .bg-color {
-  background-color: #EEE;
+  background-color: #eee;
 }
 </style>

@@ -1,7 +1,8 @@
-django==2.2.10
-django-cors-headers==3.0.2
-djangorestframework==3.9.4
-psycopg2==2.8.2
-psycopg2-binary==2.8.2
-pytz==2019.2
-sqlparse==0.3.0
+black==19.10b0
+django==3.0.5
+django-cors-headers==3.2.1
+django-extensions==2.2.9
+djangorestframework==3.11.0
+ipython==7.13.0
+pre-commit==2.2.0
+psycopg2==2.8.5

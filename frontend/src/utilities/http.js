@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const http = axios.create({ baseURL: 'http://127.0.0.1:8000/' })
+const http = axios.create({ baseURL: 'http://localhost:8000/api/' })
 
 const CONNECTION_ERROR = {
   error: true,
@@ -8,7 +8,7 @@ const CONNECTION_ERROR = {
   statusText: 'Connection error.'
 }
 
-const errorHandler = (error) => {
+const errorHandler = error => {
   if (error.response) {
     error.response.error = true
     return error.response
@@ -17,7 +17,7 @@ const errorHandler = (error) => {
 }
 
 export default {
-  get: async (url) => {
+  get: async url => {
     try {
       return await http.get(url)
     } catch (error) {
@@ -31,7 +31,7 @@ export default {
       return errorHandler(error)
     }
   },
-  delete: async (url) => {
+  delete: async url => {
     try {
       return await http.delete(url)
     } catch (error) {

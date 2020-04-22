@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="`${ inputErrors ? 'has-error is-focused' : '' }`"
-    class="col-xs-12 form-group"
-  >
+  <div :class="`${inputErrors ? 'has-error is-focused' : ''}`" class="col-xs-12 form-group">
     <label v-if="label" :for="id">
       {{ placeholder }}
     </label>
@@ -14,7 +11,7 @@
       :type="type"
       class="form-control"
       :required="required"
-    >
+    />
     <slot></slot>
     <span v-for="(error, index) in inputErrors" :key="index" class="help-block">
       {{ error }}

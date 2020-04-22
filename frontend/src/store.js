@@ -4,12 +4,12 @@ import http from '@/utilities/http'
 
 Vue.use(Vuex)
 
-const hideModal = (modalName) => {
+const hideModal = modalName => {
   // eslint-disable-next-line
   $(modalName).modal('hide')
 }
 
-const isFieldValid = (field) => !(!field || field === '')
+const isFieldValid = field => !(!field || field === '')
 
 export default new Vuex.Store({
   state: {
@@ -20,14 +20,14 @@ export default new Vuex.Store({
   },
   getters: {
     isValidForm: state => {
-      return isFieldValid(state.note.title) && isFieldValid(state.note.note)
+      return isFieldValid(state.note.title) && isFieldValid(state.note.body)
     }
   },
   mutations: {
     SET_NOTES: (state, notes) => {
       state.notes = notes
     },
-    NEW_EMPTY_NOTE: (state) => {
+    NEW_EMPTY_NOTE: state => {
       state.note = {}
       state.errors = {}
       state.isNew = true
@@ -36,9 +36,9 @@ export default new Vuex.Store({
       state.note = { ...state.note, title }
       state.errors.title = []
     },
-    SET_NOTE: (state, note) => {
-      state.note = { ...state.note, note }
-      state.errors.note = []
+    SET_BODY: (state, body) => {
+      state.note = { ...state.note, body }
+      state.errors.body = []
     },
     SET_ERRORS: (state, errors) => {
       state.errors = errors
@@ -54,13 +54,13 @@ export default new Vuex.Store({
       state.notes = state.notes.filter(noteX => noteX.id !== note.id)
       state.notes.unshift(note)
     },
-    DELETE_NOTE: (state) => {
+    DELETE_NOTE: state => {
       state.notes = state.notes.filter(noteX => noteX.id !== state.note.id)
     }
   },
   actions: {
     getNotes: async ({ commit }) => {
-      const response = await http.get('notes/?format=json')
+      const response = await http.get('notes/')
       if (!response.error) {
         commit('SET_NOTES', response.data)
       }
@@ -88,7 +88,7 @@ export default new Vuex.Store({
     updateNote: async ({ state, commit }, event) => {
       if (event) event.preventDefault()
       commit('SET_ERRORS', {})
-      const response = await http.patch(`notes/${state.note.id}/?format=json`, state.note)
+      const response = await http.patch(`notes/${state.note.id}/`, state.note)
       if (!response.error) {
         commit('UPDATE_NOTE', response.data)
         hideModal('#note-form')
@@ -97,7 +97,7 @@ export default new Vuex.Store({
       }
     },
     deleteNote: async ({ state, commit }) => {
-      const response = await http.delete(`notes/${state.note.id}/?format=json`)
+      const response = await http.delete(`notes/${state.note.id}/`)
       if (!response.error) {
         commit('DELETE_NOTE')
         hideModal('#note-status')
