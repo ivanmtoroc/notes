@@ -1,5 +1,5 @@
 /* eslint-disable */
-self.importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js')
+self.importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js')
 
 const APP_SHELL_CACHE_FILES = [
   '/static/bower_components/bootstrap/dist/js/bootstrap.min.js',
@@ -34,7 +34,7 @@ const SYNC_FLAG = 'SYNC_FLAG'
 
 const CHANNEL = new BroadcastChannel('sync-messages')
 
-const BACKGROUND_SYNC = new workbox.backgroundSync.Plugin('notes', {
+const BACKGROUND_SYNC = new workbox.backgroundSync.BackgroundSyncPlugin('notes', {
   onSync: async function() {
     let entry
     while ((entry = await this.shiftRequest())) {
@@ -58,7 +58,7 @@ workbox.routing.registerRoute(
   new workbox.strategies.NetworkFirst({
     cacheName: 'notes',
     plugins: [
-      new workbox.cacheableResponse.Plugin({
+      new workbox.cacheableResponse.CacheableResponsePlugin({
         statuses: [0, 200]
       })
     ]
