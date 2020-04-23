@@ -1,3 +1,5 @@
+const { InjectManifest } = require('workbox-webpack-plugin')
+
 module.exports = {
   devServer: {
     watchOptions: {
@@ -9,11 +11,13 @@ module.exports = {
     output: {
       filename: 'static/js/app.js'
     },
-    optimization: {
-      splitChunks: false
-    }
+    plugins: [
+      new InjectManifest({
+        swSrc: './public/service-worker.js',
+        exclude: [/\.map$/, /img\/icons\//, /favicon\.ico$/, /^manifest.*\.js?$/]
+      })
+    ]
   },
-  filenameHashing: false,
   outputDir: './dist/',
   assetsDir: 'static'
 }

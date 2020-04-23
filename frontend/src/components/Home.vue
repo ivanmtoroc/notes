@@ -4,7 +4,7 @@
       <header-component></header-component>
       <div class="container-fluid margin">
         <h1 class="text-center">
-          Your Notes
+          Note list
         </h1>
         <div class="row">
           <note v-for="(note, index) in notes" :note="note" :key="index" />

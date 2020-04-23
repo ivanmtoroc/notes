@@ -5,7 +5,6 @@ from django.core.exceptions import ImproperlyConfigured
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend/")
 
 
 with open(os.path.join(BASE_DIR, "config/secrets.json")) as secrets_file:
@@ -53,7 +52,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(FRONTEND_DIR, "dist/")],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -89,4 +88,3 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(FRONTEND_DIR, "dist/static/")]

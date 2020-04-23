@@ -9,7 +9,8 @@
     },
     "scripts": {
         "dev": "vue-cli-service serve",
-        "build": "vue-cli-service build"
+        "build": "vue-cli-service build",
+        "sw": "npm run build && serve dist/"
     },
     "dependencies": {
         "axios": "^0.19.2",
@@ -17,7 +18,8 @@
         "register-service-worker": "^1.7.1",
         "vue": "^2.6.11",
         "vue-router": "^3.1.6",
-        "vuex": "^3.2.0"
+        "vuex": "^3.2.0",
+        "workbox-webpack-plugin": "^5.1.2"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "^4.3.1",
@@ -31,6 +33,7 @@
         "eslint-plugin-prettier": "^3.1.1",
         "eslint-plugin-vue": "^6.2.2",
         "prettier": "^1.19.1",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.11",
+        "serve": "^11.3.0"
     }
 }

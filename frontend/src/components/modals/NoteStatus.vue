@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12">
         <p>
-          Are you sure to delete the note
+          Are you sure you want to delete the note
           <strong>{{ note.title }}</strong
           >?
         </p>
