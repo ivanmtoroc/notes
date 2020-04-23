@@ -30,11 +30,9 @@ const APP_SHELL_CACHE_FILES = [
 
 const HOST = 'http://localhost:8000/api/'
 
-const SYNC_FLAG = 'SYNC_FLAG'
-
 const CHANNEL = new BroadcastChannel('sync-messages')
 
-const BACKGROUND_SYNC = new workbox.backgroundSync.BackgroundSyncPlugin('notes', {
+const BACKGROUND_SYNC_PLUGIN = new workbox.backgroundSync.BackgroundSyncPlugin('notes', {
   onSync: async function() {
     let entry
     while ((entry = await this.shiftRequest())) {
@@ -69,7 +67,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   `${HOST}notes/`,
   new workbox.strategies.NetworkOnly({
-    plugins: [BACKGROUND_SYNC]
+    plugins: [BACKGROUND_SYNC_PLUGIN]
   }),
   'POST'
 )
