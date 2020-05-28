@@ -26,7 +26,7 @@ export default {
   },
   post: async (url, data) => {
     try {
-      return await http.post(url, data)
+      return await http.post(url, data, { 'content-type': 'multipart/form-data' })
     } catch (error) {
       return errorHandler(error)
     }

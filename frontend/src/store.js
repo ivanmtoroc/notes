@@ -40,6 +40,10 @@ export default new Vuex.Store({
       state.note = { ...state.note, body }
       state.errors.body = []
     },
+    SET_IMAGE: (state, image) => {
+      state.note = { ...state.note, image }
+      state.errors.body = []
+    },
     SET_ERRORS: (state, errors) => {
       state.errors = errors
     },

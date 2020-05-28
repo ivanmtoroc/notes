@@ -18,6 +18,10 @@
       <p class="body">
         {{ note.body }}
       </p>
+      <div v-if="note.image" class="note-image-container">
+        <p>Image:</p>
+        <img :src="note.image" alt="Image" />
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +44,10 @@ export default {
 </script>
 
 <style scoped>
+.note-image-container {
+  margin-top: 20px;
+}
+
 .action {
   margin: 0px 5px;
   opacity: 0.6 !important;
