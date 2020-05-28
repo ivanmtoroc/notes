@@ -18,9 +18,16 @@
       <p class="body">
         {{ note.body }}
       </p>
-      <div v-if="note.image" class="note-image-container">
-        <p>Image:</p>
-        <img :src="note.image" alt="Image" />
+      <h3 v-if="note.image || note.audio">Note files:</h3>
+      <div class="assets-container">
+        <div v-if="note.image">
+          <p>Image:</p>
+          <img :src="note.image" alt="Image" />
+        </div>
+        <div v-if="note.audio">
+          <p>Audio:</p>
+          <audio :src="note.audio" controls></audio>
+        </div>
       </div>
     </div>
   </div>
@@ -44,8 +51,13 @@ export default {
 </script>
 
 <style scoped>
-.note-image-container {
+.assets-container {
+  display: flex;
   margin-top: 20px;
+}
+
+.assets-container div {
+  padding: 0 20px;
 }
 
 .action {

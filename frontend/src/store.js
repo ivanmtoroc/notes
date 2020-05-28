@@ -32,6 +32,15 @@ export default new Vuex.Store({
       state.errors = {}
       state.isNew = true
     },
+    CLEAN_DATA: state => {
+      var note = state.note
+      Object.keys(note).forEach(key => {
+        let value = note[key]
+        if (value === null) {
+          delete note[key]
+        }
+      })
+    },
     SET_TITLE: (state, title) => {
       state.note = { ...state.note, title }
       state.errors.title = []
@@ -42,6 +51,10 @@ export default new Vuex.Store({
     },
     SET_IMAGE: (state, image) => {
       state.note = { ...state.note, image }
+      state.errors.body = []
+    },
+    SET_AUDIO: (state, audio) => {
+      state.note = { ...state.note, audio }
       state.errors.body = []
     },
     SET_ERRORS: (state, errors) => {
@@ -74,6 +87,7 @@ export default new Vuex.Store({
     },
     createNote: async ({ state, commit }, event) => {
       if (event) event.preventDefault()
+      commit('CLEAN_DATA')
       commit('SET_ERRORS', {})
       const response = await http.post('notes/', state.note)
       if (!navigator.onLine) {
@@ -91,6 +105,7 @@ export default new Vuex.Store({
     },
     updateNote: async ({ state, commit }, event) => {
       if (event) event.preventDefault()
+      commit('CLEAN_DATA')
       commit('SET_ERRORS', {})
       const response = await http.patch(`notes/${state.note.id}/`, state.note)
       if (!response.error) {

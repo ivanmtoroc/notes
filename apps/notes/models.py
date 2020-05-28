@@ -12,6 +12,7 @@ class Note(BaseModel):
     title = models.CharField(max_length=100)
     body = models.TextField()
     image = models.ImageField(blank=True, null=True)
+    audio = models.FileField(blank=True, null=True)
 
     def human_date(self):
         return humanize.naturaltime(self.modified_at)

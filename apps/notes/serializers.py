@@ -18,19 +18,37 @@ class Base64ImageField(serializers.ImageField):
             try:
                 decoded_file = base64.b64decode(data)
             except TypeError:
-                self.fail("invalid_image")
+                self.fail("invalid file")
 
             file_name = str(uuid.uuid4())[:12]
             file_extension = self.get_file_extension(file_name, decoded_file)
             complete_file_name = "%s.%s" % (file_name, file_extension)
             data = ContentFile(decoded_file, name=complete_file_name)
 
-        return super(Base64ImageField, self).to_internal_value(data)
+        return super().to_internal_value(data)
 
     def get_file_extension(self, file_name, decoded_file):
         extension = imghdr.what(file_name, decoded_file)
         extension = "jpg" if extension == "jpeg" else extension
         return extension
+
+
+class Base64FileField(serializers.FileField):
+    def to_internal_value(self, data):
+        if isinstance(data, six.string_types):
+            if "data:" in data and ";base64," in data:
+                header, data = data.split(";base64,")
+
+            try:
+                decoded_file = base64.b64decode(data)
+            except TypeError:
+                self.fail("invalid file")
+
+            file_name = str(uuid.uuid4())[:12]
+            complete_file_name = "%s.%s" % (file_name, "webm")
+            data = ContentFile(decoded_file, name=complete_file_name)
+
+        return super().to_internal_value(data)
 
 
 class NoteSerializer(serializers.ModelSerializer):
@@ -39,7 +57,8 @@ class NoteSerializer(serializers.ModelSerializer):
     """
 
     image = Base64ImageField(max_length=None, use_url=True, required=False)
+    audio = Base64FileField(max_length=None, use_url=True, required=False)
 
     class Meta:
         model = Note
-        fields = ("id", "human_date", "title", "body", "image")
+        fields = ("id", "human_date", "title", "body", "image", "audio")
